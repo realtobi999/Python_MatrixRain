@@ -1,3 +1,3 @@
-from .matrix_rain import run_matrix_rain
+from .matrix_rain import start_rainfall
 
-__all__ = ["run_matrix_rain"]
+__all__ = ["start_rainfall"]

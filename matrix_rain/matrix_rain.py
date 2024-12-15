@@ -2,64 +2,89 @@ import os
 import random
 import re
 import time
-from typing import List
 import iridis
+from typing import List
 from wcwidth import wcswidth
 
-GREEN_SHADES = [
+TERMINAL_WIDTH, TERMINAL_HEIGHT = os.get_terminal_size()
+COLOR_SHADES = [
     "\033[2;32m",  # Dark Green
-    "\033[32m",    # Normal Green
+    "\033[32m",  # Normal Green
     "\033[1;32m",  # Bright Green
 ]
-def remove_color_codes(text):
-    return re.sub(r'\033\[[0-9;]*[mK]', '', text)
 
-def truncate_to_width(text, width):
-    clean_text = remove_color_codes(text)
-    
-    if wcswidth(clean_text) > width:
-        truncated_text = ""
+
+def strip_ansi_color_codes(text):
+    return re.sub(r"\033\[[0-9;]*[mK]", "", text)
+
+
+def fit_to_width(text, max_width):
+    clean_text = strip_ansi_color_codes(text)
+
+    if wcswidth(clean_text) > max_width:
+        clipped_text = ""
         for char in text:
-            if wcswidth(remove_color_codes(truncated_text + char)) <= width:
-                truncated_text += char
+            if wcswidth(strip_ansi_color_codes(clipped_text + char)) <= max_width:
+                clipped_text += char
             else:
                 break
-        return truncated_text
+        return clipped_text
     return text
 
-def run_matrix_rain(symbols: List[str]) -> None:
-    line_patterns_symbols = [" ", "$"]
-    line_pattern = []
 
-    console_width = os.get_terminal_size().columns
-    console_length = os.get_terminal_size().lines
+def refresh_terminal_size() -> bool:
+    resized = False
 
-    for _ in range(console_width):
-        symbol = random.choice(line_patterns_symbols)
-        line_pattern.append(symbol)
-        
-    while True:
+    global TERMINAL_WIDTH, TERMINAL_HEIGHT
+
+    old_width, old_height = TERMINAL_WIDTH, TERMINAL_HEIGHT
+    new_width, new_height = os.get_terminal_size()
+
+    if old_width != new_width or old_height != new_height:
         os.system("clear" if os.name == "posix" else "cls")
+        resized = True
 
-        for _ in range(console_length - 1):
-            line = ""
-            for i, line_pattern_char in enumerate(line_pattern):
-                if line_pattern_char == "$":
+    TERMINAL_WIDTH, TERMINAL_HEIGHT = new_width, new_height
+
+    return resized
+
+
+def start_rainfall(symbols: List[str]) -> None:
+    columns_pattern_symbols = [" ", "$"]
+    columns = []
+
+    while True:
+        row_index = 0
+        while row_index in range(TERMINAL_HEIGHT - 1):
+            resized = refresh_terminal_size()
+
+            if len(columns) == 0 or resized:
+                row_index = 0
+                columns.extend([random.choice(columns_pattern_symbols)] * TERMINAL_WIDTH)
+
+            row = ""
+            for col_index, char in enumerate(columns):
+                if char == "$":
                     symbol = random.choice(symbols)
 
-                    if random.choice(range(console_length // 7)) == 1:
-                        symbol = " "
-                        line_pattern[i] = " "
+                    if random.random() < 0.3:
+                        columns[col_index] = " "
+                        row += " "
+                        continue
 
-                    line += GREEN_SHADES[i % len(GREEN_SHADES)]
-                    line += symbol
-                    line += iridis.Color.RESET.value
+                    row += COLOR_SHADES[col_index % len(COLOR_SHADES)]
+                    row += symbol
+                    row += iridis.Color.RESET.value
 
-                elif line_pattern_char == " ":
-                    line += " "
+                elif char == " ":
+                    row += " "
 
-                    if random.choice(range(int(console_length // 0.7))) == 1:
-                        line_pattern[i] = "$" 
+                    if random.random() < 0.09:
+                        columns[col_index] = "$"
 
-            print(truncate_to_width(line, console_width))
-            time.sleep(0.1)
+            print(fit_to_width(row, TERMINAL_WIDTH))
+            time.sleep(0.08)
+
+            row_index += 1
+
+        os.system("clear" if os.name == "posix" else "cls")
