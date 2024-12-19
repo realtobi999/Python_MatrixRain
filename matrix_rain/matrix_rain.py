@@ -47,6 +47,8 @@ def start_rainfall(symbols: List[str]) -> None:
         if keyboard.is_pressed("q"):
             return
         if keyboard.is_pressed("c"):
+            time.sleep(1)
+
             # Iterate through the default colors pattern.
             color_keys = list(COLORS.values())
             current_index = color_keys.index(default_colors_scheme)
@@ -69,9 +71,7 @@ def start_rainfall(symbols: List[str]) -> None:
             shift_column_down(screen[:, col])
 
         # Print and adjust speed.
-        time.sleep(0.1)
+        time.sleep(0.02)
 
-        output_rows = [
-            "".join(f"{random.choice(default_colors_scheme)}{random.choice(symbols)}\033[0m" if cell == 1 else " " for cell in row) for row in screen
-        ]
+        output_rows = ["".join(f"{random.choice(default_colors_scheme)}{random.choice(symbols)}\033[0m" if cell == 1 else " " for cell in row) for row in screen]
         print_and_clear_screen("\n".join(output_rows))
