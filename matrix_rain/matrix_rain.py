@@ -71,7 +71,7 @@ def start_rainfall(symbols: List[str]) -> None:
             shift_column_down(screen[:, col])
 
         # Print and adjust speed.
-        time.sleep(0.02)
+        time.sleep(0.03)
 
         output_rows = ["".join(f"{random.choice(default_colors_scheme)}{random.choice(symbols)}\033[0m" if cell == 1 else " " for cell in row) for row in screen]
         print_and_clear_screen("\n".join(output_rows))
