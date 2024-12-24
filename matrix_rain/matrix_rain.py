@@ -4,13 +4,14 @@ import sys
 import time
 import keyboard
 import numpy as np
+from iridis import Color
 from typing import List
 
 TERMINAL_WIDTH, TERMINAL_HEIGHT = os.get_terminal_size()
 COLORS = {
-    "green": ["\033[32m", "\033[1;32m", "\033[2;32m"],
-    "red": ["\033[31m", "\033[1;31m", "\033[2;31m"],
-    "blue": ["\033[34m", "\033[1;34m", "\033[2;34m"],
+    "green": [Color.GREEN.value, Color.BOLD_GREEN.value, Color.HIGH_INT_GREEN.value, Color.BOLD_HIGH_INT_GREEN.value],
+    "red": [Color.RED.value, Color.BOLD_RED.value, Color.HIGH_INT_RED.value, Color.BOLD_HIGH_INT_RED.value],
+    "blue": [Color.BOLD_BLUE.value, Color.BOLD_BLUE.value, Color.HIGH_INT_BLUE.value, Color.BOLD_HIGH_INT_BLUE.value],
 }
 
 
@@ -73,5 +74,5 @@ def start_rainfall(symbols: List[str]) -> None:
         # Print and adjust speed.
         time.sleep(0.03)
 
-        output_rows = ["".join(f"{random.choice(default_colors_scheme)}{random.choice(symbols)}\033[0m" if cell == 1 else " " for cell in row) for row in screen]
+        output_rows = ["".join(f"{random.choice(default_colors_scheme)}{random.choice(symbols)}{Color.RESET.value}" if cell == 1 else " " for cell in row) for row in screen]
         print_and_clear_screen("\n".join(output_rows))

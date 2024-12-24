@@ -22,15 +22,20 @@ Matrix Rain is a terminal-based simulation inspired by the iconic "Matrix" digit
 
 - `Python 3.x`
 - `keyboard` library
+- `iridis` library
 - `numpy` library
 
 #### Install Dependencies
 
 You can install the necessary libraries using the following commands:
 
+*Note: The keyboard library requires sudo permissions on linux so please install all required libraries with sudo mode.*
+
 ```bash
 pip install keyboard numpy
 ```
+
+*Note: The keyboard library requires sudo permissions on linux so run the app as sudo.*
 
 **To run the application**, simply execute this in the terminal:
 
