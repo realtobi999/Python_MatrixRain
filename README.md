@@ -35,9 +35,9 @@ You can install the necessary libraries using the following commands:
 pip install keyboard numpy
 ```
 
-*Note: The keyboard library requires sudo permissions on linux so run the app as sudo.*
-
 **To run the application**, simply execute this in the terminal:
+
+*Note: The keyboard library requires sudo permissions on linux so run the app as sudo.*
 
 ```bash
 python matrix_rain.py
