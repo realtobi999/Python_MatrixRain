@@ -11,7 +11,10 @@ TERMINAL_WIDTH, TERMINAL_HEIGHT = os.get_terminal_size()
 COLORS = {
     "green": [Color.GREEN.value, Color.BOLD_GREEN.value, Color.HIGH_INT_GREEN.value, Color.BOLD_HIGH_INT_GREEN.value],
     "red": [Color.RED.value, Color.BOLD_RED.value, Color.HIGH_INT_RED.value, Color.BOLD_HIGH_INT_RED.value],
-    "blue": [Color.BOLD_BLUE.value, Color.BOLD_BLUE.value, Color.HIGH_INT_BLUE.value, Color.BOLD_HIGH_INT_BLUE.value],
+    "blue": [Color.BLUE.value, Color.BOLD_BLUE.value, Color.HIGH_INT_BLUE.value, Color.BOLD_HIGH_INT_BLUE.value],
+    "yellow": [Color.YELLOW.value, Color.BOLD_YELLOW.value, Color.HIGH_INT_YELLOW.value, Color.BOLD_HIGH_INT_YELLOW.value],
+    "purple": [Color.PURPLE.value, Color.BOLD_PURPLE.value, Color.HIGH_INT_PURPLE.value, Color.BOLD_HIGH_INT_PURPLE.value],
+    "cyan": [Color.CYAN.value, Color.BOLD_CYAN.value, Color.HIGH_INT_CYAN.value, Color.BOLD_HIGH_INT_CYAN.value],
 }
 
 
