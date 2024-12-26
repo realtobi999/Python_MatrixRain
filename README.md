@@ -32,7 +32,7 @@ You can install the necessary libraries using the following commands:
 *Note: The keyboard library requires sudo permissions on linux so please install all required libraries with sudo mode.*
 
 ```bash
-pip install keyboard numpy
+pip install keyboard numpy iridis
 ```
 
 **To run the application**, simply execute this in the terminal:
